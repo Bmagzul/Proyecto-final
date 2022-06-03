@@ -16,7 +16,7 @@ class baseDatos
 		char usuario[5] = "root";
 		char contrasenia[5] = "root";
 		char nombreBase[15] = "proyecto_final";
-		int puerto = 3306;
+		int puerto = 3307;
 
 	public:
 		MYSQL* db;
@@ -184,9 +184,9 @@ void menuPersona()
 		switch (opcion)
 		{
 			case 1:
-				objPersona.capturarDatos();
+				objPersona.capturarDatos(); // Se capturan los datos
 
-				if (objPersona.guardar())
+				if (objPersona.guardar()) // Se guardan los datos
 				{
 					cout << endl<<"Persona guardada correctamente." << endl;
 				}
@@ -197,7 +197,7 @@ void menuPersona()
 				break;
 			case 2:
 				
-				objPersona.capturarDatos(true);
+				objPersona.capturarDatos(true); // Se capturan los datos (enviamos true por ser actualizacion)
 
 				if (objPersona.guardar())
 				{
@@ -289,7 +289,6 @@ public:
 			query += "'" + registro.tipo_tarjeta + "'";
 			query += ")";
 		}
-		cout << query << endl;
 
 		consulta(query);
 
@@ -580,7 +579,7 @@ class busquedas : public baseDatos
 			{
 				query += condicion;
 			}
-			cout << endl << query << endl;
+
 			resultado = consulta(query);
 
 			procesarResulatado();
@@ -722,36 +721,44 @@ void menuBusquedas()
 
 void mostrarMenu() 
 {
-	int opcion;
-	cout << "----- Bienvenido ------"<<endl;
-	cout << "1. Persona."<<endl;
-	cout << "2. Datos financieros." << endl;
-	cout << "3. Cuenta virtual." << endl;
-	cout << "4. Busquedas." << endl;
-	cout << "Seleccione la opcion: ";
+	bool salir = false;
+	while (!salir) {
+		int opcion;
+		cout << endl<< "----- Bienvenido ------" << endl;
+		cout << "1. Persona." << endl;
+		cout << "2. Datos financieros." << endl;
+		cout << "3. Cuenta virtual." << endl;
+		cout << "4. Busquedas." << endl;
+		cout << "5. Salir." << endl;
+		cout << "Seleccione la opcion: ";
 
-	cin >> opcion;
-	cout << endl;
-	if (opcion == 1)
-	{
-		menuPersona();
-	}
-	else if (opcion == 2)
-	{
-		menuDatosFinancieros();
-	}
-	else if (opcion == 3)
-	{
-		menuCuentaVirtual();
-	}
-	else if (opcion == 4)
-	{
-		menuBusquedas();
-	}
-	else 
-	{
-		cout << "Opcion no encontrada" << endl << endl;
-		mostrarMenu();
+		cin >> opcion;
+		cout << endl;
+		if (opcion == 1)
+		{
+			menuPersona();
+		}
+		else if (opcion == 2)
+		{
+			menuDatosFinancieros();
+		}
+		else if (opcion == 3)
+		{
+			menuCuentaVirtual();
+		}
+		else if (opcion == 4)
+		{
+			menuBusquedas();
+		}
+		else if (opcion == 5)
+		{
+			salir = true;
+		}
+		else
+		{
+			cout << "Opcion no encontrada" << endl << endl;
+			mostrarMenu();
+		}
 	}
 }
 
